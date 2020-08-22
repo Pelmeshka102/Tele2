@@ -16,7 +16,14 @@ class OwnTarif extends StatelessWidget {
           backgroundColor: mainColor,
           elevation: 0,
           title: Text("Настрой под себя"),
-          centerTitle: true,
+          centerTitle: true,actions: [
+          GestureDetector(
+            onTap: ()=>Navigator.pushNamed(context, "/Constructor/OwnTarif/Helper"),
+            child: Container(
+                margin: EdgeInsets.only(right: 10),
+                child: SvgPicture.asset("assets/help.svg")),
+          )
+        ],
           leading: IconButton(
             icon: const Icon(
               Icons.arrow_back,
@@ -42,10 +49,10 @@ class OwnTarif extends StatelessWidget {
                   WindowServices("Мессенджеры"),
                   WindowServices("Больше услуг"),
                   Sms(),
+                  AlwaysFree(),
                   Container(
                       margin: EdgeInsets.only(bottom: 30),
                       child: ButtonWithText("Купить за 720",0xFF000000,0xFFFFFFFF)),
-                  AlwaysFree()
                 ]))));
   }
 }
@@ -74,15 +81,15 @@ class QuantityOfTarif extends StatelessWidget {
         child:
         Column(
           children: [
-            FieldWithHelp("Выбери нужное"),
+            FieldWithHelp("Выбери нужное",align: TextAlign.start,),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                MyDrum(),
-                MyDrum(),
+                MyDrum("ГБ"),
+                MyDrum("Мин"),
+                MyDrum("МБ/с"),
               ],
             ),
-            FieldWithHelp("Ввести вручную"),
             Container(
               margin: twoBlockInset,
               child: Row(
@@ -106,6 +113,9 @@ class QuantityOfTarif extends StatelessWidget {
   }
 }
 class MyDrum extends StatelessWidget{
+  String text;
+  MyDrum(this.text);
+
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -121,7 +131,7 @@ class MyDrum extends StatelessWidget{
                     (i)=>Text("$i",style: textStyle16)),
             itemExtent: 50,
           ),
-        ),Text("ГБ",style:textStyle16),
+        ),Text(text,style:textStyle16),
 
       ],
     );
@@ -176,15 +186,15 @@ class WindowServices extends StatelessWidget {
 
 class FieldWithHelp extends StatelessWidget {
   final String field_name;
-
-  FieldWithHelp(this.field_name);
+  final TextAlign align;
+  FieldWithHelp(this.field_name,{this.align=TextAlign.center});
 
   @override
   Widget build(BuildContext context) {
     return Row(
       children: [
         Expanded(child: Text(field_name, style: textStyle16,
-          textAlign: TextAlign.center,)),
+          textAlign: align,)),
         SvgPicture.asset("assets/help.svg")
       ],
     );

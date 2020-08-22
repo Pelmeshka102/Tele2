@@ -9,7 +9,7 @@ import 'ConstVariables.dart';
 
 class Constructor extends StatelessWidget {
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context) {//TODO ICON QUESTOIN - PODDERJKA
     return Scaffold(
         backgroundColor: Color(0xFF000000),
         appBar: AppBar(
@@ -17,6 +17,11 @@ class Constructor extends StatelessWidget {
           elevation: 0,
           title: Text("Подключиться к Tele2"),
           centerTitle: true,
+          actions: [
+            Container(
+                margin: EdgeInsets.only(right: 10),
+                child: SvgPicture.asset("assets/help.svg"))
+          ],
           leading: IconButton(
             icon: const Icon(
               Icons.arrow_back,
@@ -36,7 +41,6 @@ class Constructor extends StatelessWidget {
                   ListTarif(),
                   ImageContainer(),
                   Delivery(),
-                  Help()
                 ]))));
   }
 }
@@ -159,14 +163,22 @@ class Tarif extends StatelessWidget {
           ),
           Align(
               alignment: Alignment.centerRight,
-              child: Text("+ безлимит на Tele2 России",style:style)),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(" + ",style: style,),
+                  SvgPicture.asset("assets/infinity.svg"),
+                  SvgPicture.asset("assets/group.svg"),
+                ],
+              ),
+          ),
           Container(
             margin: EdgeInsets.only(top: 40),
             child: Align(
                 alignment: Alignment.centerLeft,
                 child: Text("600 ₽/мес.",style:TextStyle(color: Colors.white,fontSize: 48))),
           ),
-          ButtonWithText("Купить", 0xFFFFFFFF, 0xFF131313)
+          ButtonWithText("Купить", 0xFFFFFFFF, 0xFF131313,path: "/Constructor/ConnectTarif")
         ],
       ),
     );
@@ -218,35 +230,6 @@ class Delivery extends StatelessWidget {
               )),
           ButtonWithText("Подробнее", 0xFFFFFFFF, 0xFF131313)
         ],
-      ),
-    );
-  }
-}
-
-class Help extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.fromLTRB(8, 0, 8, 120),
-      child: Center(
-        child: Column(
-          children: [
-            Container(
-              margin: EdgeInsets.only(top: 10, bottom: 10),
-              child: Text(
-                "Помощь и поддержка",
-                textAlign: TextAlign.center,
-                style: TextStyle(fontSize: 36, color: Colors.white),
-              ),
-            ),
-            ButtonTextCancel(
-                "Более 200 статей и ответов на популярные вопросы"),
-            ButtonTextCancel("Как войти в личный кабинет"),
-            ButtonTextCancel("Забота об абонентах во время пандемии"),
-            ButtonTextCancel("Как настроить интернет"),
-            ButtonTextCancel("Помощь абонентам"),
-          ],
-        ),
       ),
     );
   }

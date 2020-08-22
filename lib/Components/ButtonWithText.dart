@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 class ButtonWithText extends StatelessWidget {
   final String text, path;
   final int text_color, back_color;
-
+  final double radius;
   ButtonWithText(this.text, this.text_color, this.back_color,
-      {this.path = null});
+      {this.path = null,this.radius=25});
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +20,7 @@ class ButtonWithText extends StatelessWidget {
             elevation: 0,
             shape: RoundedRectangleBorder(
               side: BorderSide(color: Colors.white, width: 1),
-              borderRadius: BorderRadius.circular(25.0),
+              borderRadius: BorderRadius.circular(radius),
             ),
             onPressed: () =>
                 path != null ? Navigator.pushNamed(context, path) : null,
