@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class ImageContainer extends StatelessWidget{
   @override
@@ -6,7 +7,7 @@ class ImageContainer extends StatelessWidget{
     return Container(
       margin: EdgeInsets.only(bottom: 24),
       width: MediaQuery.of(context).size.width,
-      child: Image.asset("assets/call.png")//TODO GRUZIM S INETA I FOTKA XUITA
+      child: SvgPicture.asset("assets/man.svg")//TODO GRUZIM S INETA i  fotka fignya
     );
   }
 

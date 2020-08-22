@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+import 'package:flutter_app/OwnTarif.dart';
 import 'Constructor.dart';
 import 'Login.dart';
 
@@ -12,8 +12,9 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       initialRoute: "/",
       routes: {
-        '/C': (context) => Login(),
-        '/': (context) => Constructor(),
+        '/': (context) => Login(),
+        '/Constructor': (context) => Constructor(),
+        '/Constructor/OwnTarif': (context) => OwnTarif(),
       },
       debugShowCheckedModeBanner: false,
     );

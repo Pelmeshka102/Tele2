@@ -1,17 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/Components/ButtonWithText.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 import 'Components/ButtonTextCancel.dart';
 import 'Components/ButtonWithTextWithoutFlex.dart';
 import 'Components/ImageContainer.dart';
+import 'ConstVariables.dart';
 
 class Constructor extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Color(0xFF131313),
+        backgroundColor: Color(0xFF000000),
         appBar: AppBar(
-          backgroundColor: Color(0xFF131313),
+          backgroundColor: mainColor,
           elevation: 0,
           title: Text("Подключиться к Tele2"),
           centerTitle: true,
@@ -89,7 +91,7 @@ class CreateTariff extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.fromLTRB(8, 8, 8, 0),
-      color: Color(0xFF130B0B),
+      color: Color(0xFF000000),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
@@ -97,7 +99,7 @@ class CreateTariff extends StatelessWidget {
               padding: EdgeInsets.all(16),
               child: Text("Тарифы",
                   style: TextStyle(fontSize: 36, color: Colors.white))),
-          ButtonWithText("Создать свой тариф", 0xFF131313, 0xFFFFFFFF)
+          ButtonWithText("Создать свой тариф", 0xFF131313, 0xFFFFFFFF,path:"/Constructor/OwnTarif")
         ],
       ),
     );
@@ -128,17 +130,18 @@ class Tarif extends StatelessWidget {
     return Container(
       padding: EdgeInsets.all(10),
       margin: EdgeInsets.only(top: 16,bottom: 16),
-      color: Color(0xFF131313),
+      color: mainColor,
       child: Column(
         children: [
           Container(
             margin: EdgeInsets.only(bottom: 28),
             child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 ButtonWithTextWithoutFlex("Везде онлайн+",Colors.black.value,0xFFFFFFFF),
                 Container(
                     margin: EdgeInsets.only(left: 10,right: 10),
-                    child: Image.asset("assets/fire.png",))
+                    child: SvgPicture.asset("assets/fire.svg",))
               ],
             ),
           ),
