@@ -1,0 +1,308 @@
+swagger: "2.0"
+info:
+  description: This is hackaton Tele2 Solution
+  version: 1.0.0
+  title: Tele2
+  termsOfService: ""
+  contact:
+    email: dmesser@yandex.ru
+
+paths:
+  /socials/:
+    get:
+      responses:
+        200:
+          description: Get all social networks, available to choose
+          schema:
+            type: array
+            items: 
+              $ref: "#/definitions/SocailNetwork"
+
+  /tariffs/:
+    get:
+      responses:
+        200:
+          description: Get all tariffs
+          schema:
+            type: array
+            items: 
+              $ref: "#/definitions/Tariff"
+
+  /addons/:
+    get:
+      responses:
+        200:
+          description: Get all additional services
+          schema:
+            type: array
+            items: 
+              $ref: "#/definitions/AdditionalService"
+  /users/:
+    get:
+      responses:
+        200:
+          description: Get all abonents
+          schema:
+            type: array
+            items: 
+              $ref: "#/definitions/User"
+  
+  /groups/:
+    get:
+      responses:
+        200:
+          description: Get all groups
+          schema:
+            type: array
+            items: 
+              $ref: "#/definitions/Group"
+
+  /sms/:
+    get:
+      responses:
+        200:
+          description: Get all sms tariffs
+          schema:
+            type: array
+            items: 
+              $ref: "#/definitions/Sms"
+  
+    
+definitions:
+  Price:
+    type: object
+    properties: 
+      rubles:
+        type: integer
+        minimum: 0
+      copeck:
+        type: integer
+        minimum: 0
+        maximum: 99
+
+    example: 
+      rubles: 450
+      copeck: 0
+
+
+  Sms:
+    type: object
+    properties: 
+      amount:
+        type: integer
+        minimum: 0
+      price:
+        $ref: "#/definitions/Price"
+      added:
+        type: boolean
+        default: false
+
+    example:
+      amount: 20
+      price:
+        rubles: 20
+        copeck: 0
+      added: true
+
+
+  SocailNetwork:
+    type: object
+    properties: 
+      name:
+        type: string
+      description:
+        type: string
+      url:
+        type: string
+        format: uri
+      price:
+        $ref: "#/definitions/Price"
+
+
+    example:
+      name: Instagram
+      description: Безлимитный доступ к Instagram
+      url: https://www.instagram.com/
+      price:
+        rubles: 10
+        copeck: 0
+
+
+  Tariff:
+    type: object
+    properties: 
+      name:
+        type: string
+      description:
+        type: string
+      minuts:
+        type: integer
+        minimum: 0
+        maximum: 1000
+      trafic:
+        type: integer
+        minimum: 0
+        maximum: 40
+      socials_in:
+        type: array
+        items: 
+          $ref: "#/definitions/SocailNetwork"
+      price:
+        $ref: "#/definitions/Price"
+      city_numbers_allowed:
+        type: boolean
+        default: false
+      sms:
+        type: array
+        items: 
+          $ref: "#/definitions/Sms"
+
+    example:
+      name: Везде онлайн+
+      description: Безлимитный интернет для WhatsApp
+      minuts: 600
+      trafic: 40
+      socials_in:
+        - name: Instagram
+          url: https://www.instagram.com/
+          price:
+            rubles: 10
+            copeck: 0
+          description: Безлимитный доступ к Instagram
+
+        - name: WhatsApp
+          url: https://www.whatsapp.com/
+          price:
+            rubles: 15
+            copeck: 0
+      price:
+        rubles: 600
+        copeck: 0
+      city_numbers_allowed: true
+      sms:
+        - amount: 20
+          price:
+            rubles: 20
+            copeck: 0
+          added: true
+        - amount: 100
+          price:
+            rubles: 70
+            copeck: 0
+          added: true
+        - amount: 300
+          price:
+            rubles: 150
+            copeck: 0
+          added: false
+
+      
+
+  AdditionalService:
+    type: object
+    properties: 
+      name:
+        type: string
+      description:
+        type: string
+      url:
+        type: string
+        format: uri
+      price:
+        $ref: "#/definitions/Price"
+
+    example:
+      name: YouTube
+      description: Безлимитный доступ к YouTube
+      url: https://www.youtube.com/
+      price:
+        rubles: 99
+        copeck: 0
+
+  
+  Names:
+    type: object
+    properties: 
+      first_name:
+        type: string    
+      last_name:
+        type: string     
+      middle_name:
+        type: string
+
+    example:
+      first_name: Владислав
+      last_name: Чуев
+      middle_name: Витальевич
+
+  User:
+    type: object
+    properties:
+      phone_number:
+        type: string
+        minimum: 10
+        maximum: 16
+        pattern: '^((8|\+7)[\- ]?)?(\(?\d{3}\)?[\- ]?)?[\d\- ]{7,10}$'
+        uniqueItems: true
+      name:
+        $ref: "#/definitions/Names"
+      connected_tariff:
+        $ref: "#/definitions/Tariff"
+      additionals:
+        type: object
+        additionalProperties: 
+          type: boolean
+
+    
+    example:
+      phone_number: +7(999)123-45-67
+      name:
+        first_name: Владислав
+        last_name: Чуев
+        middle_name: Витальевич
+      connected_tariff:
+        name: Везде онлайн+
+        description: Безлимитный интернет для WhatsApp
+        minuts: 600
+        trafic: 40
+        socials_in:
+          - name: Instagram
+            url: https://www.instagram.com/
+            price:
+              rubles: 10
+              copeck: 0
+            description: Безлимитный доступ к Instagram
+        price:
+          rubles: 600
+          copeck: 0
+        city_numbers_allowed: true
+        sms:
+          - amount: 20
+            price:
+              rubles: 20
+              copeck: 0
+            added: true
+          - amount: 100
+            price:
+              rubles: 70
+              copeck: 0
+            added: true
+          - amount: 300
+            price:
+              rubles: 150
+              copeck: 0
+            added: false
+      additional:
+          YouTube: true
+        
+      
+    
+  Group:
+    type: object
+    properties: 
+      name: 
+        type: string
+      users_in:
+        type: array
+        items: 
+          $ref: "#/definitions/User"
