@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import 'Components/ButtonWithText.dart';
+
 class Login extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -44,7 +46,7 @@ class LoginInputData extends StatelessWidget {
           Container(
               margin: EdgeInsets.only(top: 8),
               child: ButtonWithTextAndIcon(PhoneNumber(), "assets/call.png")),
-          ButtonWithText(),
+          ButtonWithText("Вход",0XFFFFFFFF,0X00000000),
           ButtonWithTextAndIcon(
               Text("Хочу стать абонентом",
                   style: TextStyle(fontSize: 16, color: Colors.white)),
@@ -55,29 +57,6 @@ class LoginInputData extends StatelessWidget {
   }
 }
 
-class ButtonWithText extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      margin: EdgeInsets.only(top: 8, bottom: 24),
-      child: Row(children: [
-        Expanded(
-          flex: 1,
-          child: RaisedButton(
-            padding: EdgeInsets.only(top: 16, bottom: 16),
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(25.0),
-            ),
-            onPressed: () => Navigator.pushNamedAndRemoveUntil(
-                context, "/profile", (route) => false),
-            //TODO :функция проверки входа и правильности данных
-            child: Text("Вход"),
-          ),
-        ),
-      ]),
-    );
-  }
-}
 
 class ButtonWithTextAndIcon extends StatelessWidget {
   final Widget content;
@@ -113,17 +92,17 @@ class PhoneNumber extends StatefulWidget {
 class PhoneNumberState extends State<PhoneNumber> {
   TextEditingController _controller;
   String _start = "+7(___) ___ - __ - __";
-
+  String next="+7(___) ___ - __ - __";
   void initState() {
     super.initState();
     _controller = TextEditingController();
+    _controller.text=_start;
   }
 
   void dispose() {
     _controller.dispose();
     super.dispose();
   }
-
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -131,8 +110,19 @@ class PhoneNumberState extends State<PhoneNumber> {
         child: TextField(
             style: TextStyle(color: Colors.white),
             onChanged: (text) {
-              _controller.text = _start;
+              if(text.length<_start.length) {
+                next = text;
+                print(text);
+                _controller.text = text.replaceFirst("_", "");
+                _controller.selection = TextSelection.fromPosition(
+                    TextPosition(offset: text.indexOf("_")));
+              }else{
+                _controller.text=next;
+              }
             },
+            onTap: (){
+              _controller.selection=TextSelection.fromPosition(TextPosition(offset:next.indexOf("_")));
+              },
             controller: _controller));
   }
 }
