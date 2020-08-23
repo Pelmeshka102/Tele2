@@ -1,87 +1,69 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app/Components/AppBarWithBody.dart';
 import 'package:flutter_app/Components/ButtonWithText.dart';
-import 'package:flutter_app/Components/TextAndIcon.dart';
+import 'package:flutter_app/Components/ContainerPadMarg.dart';
 import 'package:flutter_svg/svg.dart';
 
 import 'Components/FieldWithHelp.dart';
+import 'Components/PhoneNumber.dart';
 import 'ConstVariables.dart';
 
 class Bin extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        backgroundColor: Color(0xFF000000),
-        appBar: AppBar(
-          backgroundColor: mainColor,
-          elevation: 0,
-          title: Text("Подключиться к Tele2"),
-          centerTitle: true,
-          actions: [
-            GestureDetector(
-              onTap: () =>
-                  Navigator.pushNamed(context, "/Constructor/OwnTarif/Helper"),
-              child: Container(
-                  margin: EdgeInsets.only(right: 10),
-                  child: SvgPicture.asset("assets/help.svg")),
-            )
-          ],
-          leading: IconButton(
-            icon: const Icon(
-              Icons.arrow_back,
-              color: Colors.white,
-            ),
-            onPressed: () {
-              Navigator.pop(context);
-            },
+    return AppBarWithBody(
+      title: "Подключиться к Tele2",
+      path: "assets/help.svg",
+      content: Column(children: [
+        Container(
+          margin: twoBlockInset,
+          padding: mainInset,
+          child: Text(
+            "1 комплект в корзине",
+            style: textStyle24,
+            textAlign: TextAlign.start,
           ),
         ),
-        body: SafeArea(
-            child: SingleChildScrollView(
-          scrollDirection: Axis.vertical,
-          child: Column(children: [
-            Container(
-              margin: twoBlockInset,
-              padding: mainInset,
-              child: Text(
-                "1 комплект в корзине",
-                style: TextStyle(fontSize: 24, color: Colors.white),
-                textAlign: TextAlign.start,
-              ),
-            ),
-            AboutSim(),
-            Promo(),
-            AllSum(),
-            Lk(),
-            HowGetIt(),
-            ButtonWithText("Оформить заказ", 0xFF000000, 0xFFFFFFFF)
-          ]),
-        )));
+        AboutSim(),
+        Promo(),
+        AllSum(),
+        Lk(),
+        HowGetIt(),
+        ButtonWithText("Оформить заказ", BLACK, WHITE)
+      ]),
+    );
   }
 }
 
-class HowGetIt extends StatefulWidget{
+class HowGetIt extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
     return HowGetItState();
   }
-
 }
-enum D{Dostavka,Samovivos}
 
-class HowGetItState extends State<HowGetIt>{
+enum D { Dostavka, Samovivos }
+
+class HowGetItState extends State<HowGetIt> {
   D _character = D.Dostavka;
+
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: twoBlockInset,
-      padding: mainInset,
-      color: mainColor,
-      child: Column(
+    return ContainerPadMarg(
+      Column(
         children: [
-          Text("Способ получения",style: textStyle24,),
-          ButtonWithTextAndIcon(Text("Выберите регион, город",style: textStyle18,),"assets/location.svg"),
+          Text(
+            "Способ получения",
+            style: textStyle24,
+          ),
+          ButtonWithTextAndIcon(
+              Text(
+                "Выберите регион, город",
+                style: textStyle18,
+              ),
+              "assets/location.svg"),
           ListTile(
-            title: Text('Доставка',style: textStyle24),
+            title: Text('Доставка', style: textStyle24),
             leading: Theme(
               data: Theme.of(context).copyWith(
                 unselectedWidgetColor: Color(0xFFE8E8ED),
@@ -99,7 +81,7 @@ class HowGetItState extends State<HowGetIt>{
             ),
           ),
           ListTile(
-            title: Text('Самовывоз',style: textStyle24),
+            title: Text('Самовывоз', style: textStyle24),
             leading: Theme(
               data: Theme.of(context).copyWith(
                 unselectedWidgetColor: Color(0xFFE8E8ED),
@@ -118,18 +100,25 @@ class HowGetItState extends State<HowGetIt>{
           ),
           Container(
               margin: mainInset,
-              child: Text("Открыть карту",textAlign: TextAlign.center,style: TextStyle(color: Color(0xFF8F9399),fontSize: 24,decoration: TextDecoration.underline),))
+              child: Text(
+                "Открыть карту",
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                    color: Color(0xFF8F9399),
+                    fontSize: 24,
+                    decoration: TextDecoration.underline),
+              ))
         ],
       ),
     );
   }
-
 }
 
 class ButtonWithTextAndIcon extends StatelessWidget {
   final Widget content;
   final String path;
-  ButtonWithTextAndIcon(this.content,this.path);
+
+  ButtonWithTextAndIcon(this.content, this.path);
 
   @override
   Widget build(BuildContext context) {
@@ -154,66 +143,26 @@ class ButtonWithTextAndIcon extends StatelessWidget {
 class Lk extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: twoBlockInset,
-      padding: mainInset,
-      color: mainColor,
-      child: Column(
+    return ContainerPadMarg(
+      Column(
         children: [
           Text("Личные данные", style: textStyle16),
-          ButtonWithTextAndIcon(PhoneNumber(),"assets/user.svg"),
-          ButtonWithTextAndIcon(Text("Как к вам обращаться",style: textStyle18,),"assets/user.svg"),
+          Padding(
+            padding: twoBlockInset,
+            child: ButtonWithTextAndIcon(PhoneNumber(), "assets/user.svg"),
+          ),
+          Padding(
+            padding: twoBlockInset,
+            child: ButtonWithTextAndIcon(
+                Text(
+                  "Как к вам обращаться",
+                  style: textStyle18,
+                ),
+                "assets/user.svg"),
+          ),
         ],
       ),
     );
-  }
-}
-
-class PhoneNumber extends StatefulWidget {
-  @override
-  State<StatefulWidget> createState() {
-    return PhoneNumberState();
-  }
-}
-
-class PhoneNumberState extends State<PhoneNumber> {
-  TextEditingController _controller;
-  String _start = "+7(___) ___ - __ - __";
-  String next = "+7(___) ___ - __ - __";
-
-  void initState() {
-    super.initState();
-    _controller = TextEditingController();
-    _controller.text = _start;
-  }
-
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-        width: MediaQuery.of(context).size.width - 90 - 48 - 12 - (15),
-        child: TextField(
-            style: TextStyle(color: Colors.white),
-            onChanged: (text) {
-              if (text.length < _start.length) {
-                next = text;
-                print(text);
-                _controller.text = text.replaceFirst("_", "");
-                _controller.selection = TextSelection.fromPosition(
-                    TextPosition(offset: text.indexOf("_")));
-              } else {
-                _controller.text = next;
-              }
-            },
-            onTap: () {
-              _controller.selection = TextSelection.fromPosition(
-                  TextPosition(offset: next.indexOf("_")));
-            },
-            controller: _controller));
   }
 }
 
@@ -240,13 +189,13 @@ class AboutSim extends StatelessWidget {
             children: [
               Container(
                   margin: EdgeInsets.fromLTRB(0, 16, 16, 16),
-                  child: Text("40 ГБ", style: TarifStyle)),
+                  child: Text("40 ГБ", style: textStyle24)),
               Container(
                   margin: EdgeInsets.fromLTRB(0, 16, 16, 16),
-                  child: Text("300 Мин", style: TarifStyle)),
+                  child: Text("300 Мин", style: textStyle24)),
               Container(
                   margin: EdgeInsets.fromLTRB(0, 16, 16, 16),
-                  child: Text("10 МБ/с", style: TarifStyle)),
+                  child: Text("10 МБ/с", style: textStyle24)),
             ],
           ),
           FieldWithHelp(

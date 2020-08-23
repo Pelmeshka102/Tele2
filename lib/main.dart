@@ -19,7 +19,7 @@ class MyApp extends StatelessWidget {
         '/Constructor': (context) => Constructor(),
         '/Constructor/ConnectTarif': (context) => ConnectTariff(),
         '/Constructor/ConnectTarif/Bin': (context) => Bin(),
-        '/Constructor/OwnTarif': (context) => OwnTarif(),
+        '/Constructor/OwnTarif': (context) => OwnTariff(),
         '/Constructor/OwnTarif/Helper': (context) => Helper(),
       },
       debugShowCheckedModeBanner: false,

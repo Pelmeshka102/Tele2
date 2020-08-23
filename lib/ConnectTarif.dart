@@ -41,25 +41,27 @@ class Tariff extends StatelessWidget {
             img: "assets/edit.svg",
           ),
           Row(
-            children: [
-              Container(
-                  margin: EdgeInsets.fromLTRB(0, 16, 16, 16),
-                  child: Text("40 ГБ", style: TarifStyle)),
-              Container(
-                  margin: EdgeInsets.fromLTRB(0, 16, 16, 16),
-                  child: Text("300 Мин", style: TarifStyle)),
-              Container(
-                  margin: EdgeInsets.fromLTRB(0, 16, 16, 16),
-                  child: Text("10 МБ/с", style: TarifStyle)),
-            ],
+            children: [Info("40 ГБ"), Info("300 Мин"), Info("10 МБ/с")],
           ),
           Text(
             "600 ₽/мес",
-            style: TextStyle(fontSize: 32, color: Colors.white),
+            style: textStyle36,
           )
         ],
       ),
     );
+  }
+}
+
+class Info extends StatelessWidget {
+  EdgeInsets margin = EdgeInsets.fromLTRB(0, 16, 16, 16);
+  String text;
+
+  Info(this.text);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(margin: margin, child: Text(text, style: textStyle24));
   }
 }
 
@@ -75,6 +77,13 @@ enum Number { set, get }
 class DoWithNumberState extends State<DoWithNumber> {
   Number _character = Number.get;
 
+  void callback(Number char) {
+    setState(() {
+      _character = char;
+      print(_character);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -82,46 +91,55 @@ class DoWithNumberState extends State<DoWithNumber> {
       color: mainColor,
       child: Column(
         children: [
-          ListTile(
-            title: Text('Получить новый номер', style: TarifStyle),
-            leading: Theme(
-              data: Theme.of(context).copyWith(
-                unselectedWidgetColor: Color(0xFFE8E8ED),
-              ),
-              child: Radio(
-                activeColor: Colors.green,
-                value: Number.get,
-                groupValue: _character,
-                onChanged: (value) {
-                  setState(() {
-                    _character = value;
-                  });
-                },
-              ),
-            ),
-          ),
-          ListTile(
-            title: Text(
-              'Перенести свой номер',
-              style: TarifStyle,
-            ),
-            leading: Theme(
-              data: Theme.of(context).copyWith(
-                unselectedWidgetColor: Color(0xFFE8E8ED),
-              ),
-              child: Radio(
-                activeColor: Colors.green,
-                value: Number.set,
-                groupValue: _character,
-                onChanged: (value) {
-                  setState(() {
-                    _character = value;
-                  });
-                },
-              ),
-            ),
-          ),
+          RadioButton(
+              _character, 'Получить новый номер', Number.get, this.callback),
+          //Не обрабатывается нажатие
+          RadioButton(
+              _character, 'Перенести свой номер', Number.set, this.callback)
         ],
+      ),
+    );
+  }
+}
+
+class RadioButton extends StatefulWidget {
+  Number _character;
+  String text;
+  Number value;
+  Function callback;
+
+  RadioButton(this._character, this.text, this.value, this.callback);
+
+  @override
+  State<StatefulWidget> createState() {
+    return RadioButtonState(_character, this.text, this.value, this.callback);
+  }
+}
+
+class RadioButtonState extends State<RadioButton> {
+  Number _character;
+  String text;
+  Number value;
+  Function callback;
+
+  RadioButtonState(this._character, this.text, this.value, this.callback);
+
+  @override
+  Widget build(BuildContext context) {
+    return ListTile(
+      title: Text(this.text, style: textStyle24),
+      leading: Theme(
+        data: Theme.of(context).copyWith(
+          unselectedWidgetColor: Color(0xFFE8E8ED),
+        ),
+        child: Radio(
+          activeColor: Colors.green,
+          value: value,
+          groupValue: _character,
+          onChanged: (val) {
+            this.callback(val);
+          },
+        ),
       ),
     );
   }
@@ -138,7 +156,7 @@ class Footer extends StatelessWidget {
               color: Colors.white,
               decoration: TextDecoration.underline,
             )),
-        ButtonWithText("Продолжить", 0xFF000000, 0xFFFFFFFF,
+        ButtonWithText("Продолжить", BLACK, WHITE,
             path: "/Constructor/ConnectTarif/Bin")
       ],
     );

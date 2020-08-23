@@ -7,7 +7,7 @@ class ImageContainer extends StatelessWidget{
     return Container(
       margin: EdgeInsets.only(bottom: 24),
       width: MediaQuery.of(context).size.width,
-      child: SvgPicture.asset("assets/man.svg")//TODO GRUZIM S INETA i  fotka fignya
+      child: Image.asset("assets/man.png")
     );
   }
 

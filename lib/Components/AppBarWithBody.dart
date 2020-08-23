@@ -29,8 +29,7 @@ class AppBarWithBody extends StatelessWidget {
                     child: Container(
                         margin: EdgeInsets.only(right: 10),
                         child: SvgPicture.asset(path)),
-                  )
-                : null
+                  ):Text("")
           ],
           leading: IconButton(
             icon: const Icon(

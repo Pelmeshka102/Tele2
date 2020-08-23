@@ -5,7 +5,6 @@ TextStyle textStyle18 = TextStyle(fontSize: 18, color: Colors.white);
 TextStyle textStyle24 = TextStyle(fontSize: 24, color: Colors.white);
 TextStyle textStyle36 = TextStyle(fontSize: 36, color: Colors.white);
 TextStyle textStyle48 = TextStyle(fontSize: 48, color: Colors.white);
-TextStyle TarifStyle = TextStyle(fontSize: 24, color: Colors.white);
 int WHITE = 0xFFFFFFFF;
 int BLACK = 0xFF000000;
 int REGION = 0xFF1E96C8;

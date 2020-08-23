@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/Components/AppBarWithBody.dart';
 import 'Components/ButtonTextCancel.dart';
-import 'ConstVariables.dart';
 
 class Helper extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return AppBarWithBody(title: "Помощь и поддержка", content: Help());
+    return AppBarWithBody(title: "Помощь и поддержка", content: Help(),path: null,);
   }
 }
 
