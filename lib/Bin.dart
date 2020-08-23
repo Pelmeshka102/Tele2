@@ -3,7 +3,6 @@ import 'package:flutter_app/Components/AppBarWithBody.dart';
 import 'package:flutter_app/Components/ButtonWithText.dart';
 import 'package:flutter_app/Components/ContainerPadMarg.dart';
 import 'package:flutter_svg/svg.dart';
-
 import 'Components/FieldWithHelp.dart';
 import 'Components/PhoneNumber.dart';
 import 'ConstVariables.dart';
@@ -46,7 +45,11 @@ enum D { Dostavka, Samovivos }
 
 class HowGetItState extends State<HowGetIt> {
   D _character = D.Dostavka;
-
+  void callback(D d) {
+    setState(() {
+      _character = d;
+    });
+  }
   @override
   Widget build(BuildContext context) {
     return ContainerPadMarg(
@@ -62,42 +65,8 @@ class HowGetItState extends State<HowGetIt> {
                 style: textStyle18,
               ),
               "assets/location.svg"),
-          ListTile(
-            title: Text('Доставка', style: textStyle24),
-            leading: Theme(
-              data: Theme.of(context).copyWith(
-                unselectedWidgetColor: Color(0xFFE8E8ED),
-              ),
-              child: Radio(
-                activeColor: Colors.green,
-                value: D.Dostavka,
-                groupValue: _character,
-                onChanged: (value) {
-                  setState(() {
-                    _character = value;
-                  });
-                },
-              ),
-            ),
-          ),
-          ListTile(
-            title: Text('Самовывоз', style: textStyle24),
-            leading: Theme(
-              data: Theme.of(context).copyWith(
-                unselectedWidgetColor: Color(0xFFE8E8ED),
-              ),
-              child: Radio(
-                activeColor: Colors.green,
-                value: D.Samovivos,
-                groupValue: _character,
-                onChanged: (value) {
-                  setState(() {
-                    _character = value;
-                  });
-                },
-              ),
-            ),
-          ),
+          RadioButton(_character,'Доставка',D.Dostavka,this.callback),
+          RadioButton(_character,'Самовывоз',D.Samovivos,this.callback),
           Container(
               margin: mainInset,
               child: Text(
@@ -113,7 +82,31 @@ class HowGetItState extends State<HowGetIt> {
     );
   }
 }
+class RadioButton extends StatelessWidget{
+  D _character;
+  D value;
+  final String text;
+  final Function callback;
+  RadioButton(this._character,this.text,this.value,this.callback);
+  @override
+  Widget build(BuildContext context) {
+    return ListTile(
+      title: Text(text, style: textStyle24),
+      leading: Theme(
+        data: Theme.of(context).copyWith(
+          unselectedWidgetColor: Color(0xFFE8E8ED),
+        ),
+        child: Radio(
+          activeColor: Colors.green,
+          value: value,
+          groupValue: _character,
+          onChanged: (value) =>callback(value)
+        ),
+      ),
+    );
+  }
 
+}
 class ButtonWithTextAndIcon extends StatelessWidget {
   final Widget content;
   final String path;

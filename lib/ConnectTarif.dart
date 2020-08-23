@@ -80,7 +80,6 @@ class DoWithNumberState extends State<DoWithNumber> {
   void callback(Number char) {
     setState(() {
       _character = char;
-      print(_character);
     });
   }
 
@@ -93,7 +92,6 @@ class DoWithNumberState extends State<DoWithNumber> {
         children: [
           RadioButton(
               _character, 'Получить новый номер', Number.get, this.callback),
-          //Не обрабатывается нажатие
           RadioButton(
               _character, 'Перенести свой номер', Number.set, this.callback)
         ],
@@ -102,27 +100,13 @@ class DoWithNumberState extends State<DoWithNumber> {
   }
 }
 
-class RadioButton extends StatefulWidget {
-  Number _character;
-  String text;
-  Number value;
-  Function callback;
+class RadioButton extends StatelessWidget {
+  final Number _character;
+  final String text;
+  final Number value;
+  final Function callback;
 
   RadioButton(this._character, this.text, this.value, this.callback);
-
-  @override
-  State<StatefulWidget> createState() {
-    return RadioButtonState(_character, this.text, this.value, this.callback);
-  }
-}
-
-class RadioButtonState extends State<RadioButton> {
-  Number _character;
-  String text;
-  Number value;
-  Function callback;
-
-  RadioButtonState(this._character, this.text, this.value, this.callback);
 
   @override
   Widget build(BuildContext context) {

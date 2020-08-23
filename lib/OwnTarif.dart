@@ -102,7 +102,7 @@ class MyDrum extends StatelessWidget {
             looping: true,
             backgroundColor: mainColor,
             children:
-                List<Text>.generate(100, (i) => Text("$i", style: textStyle16)),
+            List<Text>.generate(100, (i) => Text("$i", style: textStyle16)),
             itemExtent: 50,
             onSelectedItemChanged: (value) => null,
           ),
@@ -169,10 +169,10 @@ class FieldWithHelp extends StatelessWidget {
       children: [
         Expanded(
             child: Text(
-          field_name,
-          style: textStyle16,
-          textAlign: align,
-        )),
+              field_name,
+              style: textStyle16,
+              textAlign: align,
+            )),
         SvgPicture.asset("assets/help.svg")
       ],
     );
@@ -184,16 +184,14 @@ class ButtonAndBool {
   String price;
   bool is_press;
   int color;
-
   ButtonAndBool(this.srcact, this.srcunact,
-      {this.is_press = false, this.color = 0xFFFF44FF, this.price = "20 ₽"});
+      {this.is_press = false, this.color = 0xFF333333, this.price = "20 ₽"});
 }
 
 class ServicesButton extends StatefulWidget {
   final List<ButtonAndBool> _list;
 
   ServicesButton(this._list);
-
   @override
   State<StatefulWidget> createState() {
     return ServicesButtonState(_list);
@@ -216,7 +214,7 @@ class ServicesButtonState extends State<ServicesButton> {
             onTap: () {
               setState(() {
                 e.is_press = !e.is_press;
-                e.is_press ? e.color = Colors.green.value : Colors.grey.value;
+                e.is_press ? e.color = Colors.green.value : e.color = 0xFF333333;
               });
             },
             child: Column(
@@ -282,30 +280,30 @@ class SmsPriceState extends State<SmsPrice> {
   Widget build(BuildContext context) {
     return Column(
         children: _list.map((e) {
-      return Row(
-        children: [
-          Expanded(
-            child: Container(child: Text(e.text, style: textStyle16)),
-          ),
-          Expanded(child: Text(e.price, style: textStyle16)),
-          Theme(
-            data: Theme.of(context).copyWith(
-              unselectedWidgetColor: Color(0xFFE8E8ED),
-            ),
-            child: Radio(
-              value: e.text,
-              groupValue: _character,
-              activeColor: Colors.green,
-              onChanged: (value) {
-                setState(() {
-                  _character = value;
-                });
-              },
-            ),
-          ),
-        ],
-      );
-    }).toList());
+          return Row(
+            children: [
+              Expanded(
+                child: Container(child: Text(e.text, style: textStyle16)),
+              ),
+              Expanded(child: Text(e.price, style: textStyle16)),
+              Theme(
+                data: Theme.of(context).copyWith(
+                  unselectedWidgetColor: Color(0xFFE8E8ED),
+                ),
+                child: Radio(
+                  value: e.text,
+                  groupValue: _character,
+                  activeColor: Colors.green,
+                  onChanged: (value) {
+                    setState(() {
+                      _character = value;
+                    });
+                  },
+                ),
+              ),
+            ],
+          );
+        }).toList());
   }
 }
 
