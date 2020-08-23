@@ -1,47 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app/Components/AppBarWithBody.dart';
 import 'package:flutter_app/Components/ButtonWithText.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-
-import 'Components/ButtonTextCancel.dart';
-import 'Components/ButtonWithTextWithoutFlex.dart';
 import 'Components/ImageContainer.dart';
 import 'ConstVariables.dart';
 
 class Constructor extends StatelessWidget {
   @override
-  Widget build(BuildContext context) {//TODO ICON QUESTOIN - PODDERJKA
-    return Scaffold(
-        backgroundColor: Color(0xFF000000),
-        appBar: AppBar(
-          backgroundColor: mainColor,
-          elevation: 0,
-          title: Text("Подключиться к Tele2"),
-          centerTitle: true,
-          actions: [
-            Container(
-                margin: EdgeInsets.only(right: 10),
-                child: SvgPicture.asset("assets/help.svg"))
-          ],
-          leading: IconButton(
-            icon: const Icon(
-              Icons.arrow_back,
-              color: Colors.white,
-            ),
-            onPressed: () {
-              Navigator.pop(context);
-            },
-          ),
-        ),
-        body: SafeArea(
-            child: SingleChildScrollView(
-                scrollDirection: Axis.vertical,
-                child: Column(children: [
-                  Region(),
-                  CreateTariff(),
-                  ListTarif(),
-                  ImageContainer(),
-                  Delivery(),
-                ]))));
+  Widget build(BuildContext context) {
+    return AppBarWithBody(
+        title: "Подключиться к Tele2",
+        path: "assets/help.svg",
+        content: Column(children: [
+          Region(),
+          CreateTariff(),
+          ListTarif(),
+          ImageContainer(),
+          Delivery(),
+        ]));
   }
 }
 
@@ -49,16 +25,17 @@ class Region extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Color(0xFF1E96C8),
+      color: Color(REGION),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Container(
+              width: MediaQuery.of(context).size.width / 1.8,
               padding: EdgeInsets.all(10),
               child: Text(
-                "Ваш регион - Москва и \nМосковская область?",
+                "Ваш регион - Москва и Московская область?",
                 style: TextStyle(fontSize: 18),
-              )), //TODO ПЕРЕНОС СЛОВА
+              )),
           Container(
             child: Row(
               children: [
@@ -82,8 +59,8 @@ class Button extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(left: 5, right: 5),
-      padding: EdgeInsets.fromLTRB(24, 10, 24, 10),
+      margin: EdgeInsets.symmetric(horizontal: 5),
+      padding: EdgeInsets.symmetric(horizontal: 24,vertical: 10),
       color: Color(back_color),
       child: Icon(icon, color: Color(color)),
     );
@@ -94,16 +71,15 @@ class CreateTariff extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.fromLTRB(8, 8, 8, 0),
-      color: Color(0xFF000000),
+      padding: EdgeInsets.all(8),
+      color: Color(BLACK),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Padding(
-              padding: EdgeInsets.all(16),
-              child: Text("Тарифы",
-                  style: TextStyle(fontSize: 36, color: Colors.white))),
-          ButtonWithText("Создать свой тариф", 0xFF131313, 0xFFFFFFFF,path:"/Constructor/OwnTarif")
+          Container(
+              padding: mainInset, child: Text("Тарифы", style: textStyle36)),
+          ButtonWithText("Создать свой тариф", MAINCOLOR, WHITE,
+              path: "/Constructor/OwnTarif")
         ],
       ),
     );
@@ -120,20 +96,16 @@ class ListTarif extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(children:
-      _list.map((elem) => elem).toList()
-    );
+    return Column(children: _list.map((elem) => elem).toList());
   }
-
 }
 
 class Tarif extends StatelessWidget {
-  TextStyle style =TextStyle(fontSize: 24,color: Colors.white);
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.all(10),
-      margin: EdgeInsets.only(top: 16,bottom: 16),
+      padding: mainInset,
+      margin: twoBlockInset,
       color: mainColor,
       child: Column(
         children: [
@@ -142,95 +114,100 @@ class Tarif extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                ButtonWithTextWithoutFlex("Везде онлайн+",Colors.black.value,0xFFFFFFFF),
+                ButtonWithText(
+                    "Везде онлайн+", BLACK, WHITE, flex: 0,
+                  padding: EdgeInsets.symmetric(horizontal: 30,vertical: 20),
+                  margin: EdgeInsets.all(0),),
                 Container(
-                    margin: EdgeInsets.only(left: 10,right: 10),
-                    child: SvgPicture.asset("assets/fire.svg",))
+                    margin: sideInset,
+                    child: SvgPicture.asset(
+                      "assets/fire.svg",
+                    ))
               ],
             ),
           ),
           Align(
               alignment: Alignment.centerLeft,
-              child: Text("600 мин.",style:style)),
+              child: Text("600 мин.", style: textStyle24)),
           Align(
               alignment: Alignment.centerRight,
-              child: Text("+ безлимит на Tele2 России",style:style)),
+              child: Text("+ безлимит на Tele2 России", style: textStyle24)),
           Container(
             margin: EdgeInsets.only(top: 20),
             child: Align(
                 alignment: Alignment.centerLeft,
-                child: Text("40 ГБ",style:style)),
+                child: Text("40 ГБ", style: textStyle24)),
           ),
           Align(
-              alignment: Alignment.centerRight,
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Text(" + ",style: style,),
-                  SvgPicture.asset("assets/infinity.svg"),
-                  SvgPicture.asset("assets/group.svg"),
-                ],
-              ),
+            alignment: Alignment.centerRight,
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(
+                  " + ",
+                  style: textStyle24,
+                ),
+                SvgPicture.asset("assets/infinity.svg"),
+                SvgPicture.asset("assets/group.svg"),
+              ],
+            ),
           ),
           Container(
             margin: EdgeInsets.only(top: 40),
             child: Align(
                 alignment: Alignment.centerLeft,
-                child: Text("600 ₽/мес.",style:TextStyle(color: Colors.white,fontSize: 48))),
+                child: Text("600 ₽/мес.",
+                    style: textStyle48)),
           ),
-          ButtonWithText("Купить", 0xFFFFFFFF, 0xFF131313,path: "/Constructor/ConnectTarif")
+          ButtonWithText("Купить", WHITE, MAINCOLOR,
+              path: "/Constructor/ConnectTarif")
+        ],
+      ),
+    );
+  }
+} //TODO не редачил
+
+class Delivery extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: sideInset,
+      child: Column(
+        children: [
+          Text("Доставим SIM-карту бесплатно домой",
+              style:textStyle36),
+          Container(
+            margin: twoBlockInset,
+            child: Text(
+                "Оформите заказ онлайн на сайте Tele2 и активируйте SIM-карту самостоятельно:",
+                textAlign: TextAlign.left,
+                style: textStyle18),
+          ),
+          DotsInList(text: 'быстро'),
+          DotsInList(text: 'удобно'),
+          DotsInList(text: 'качественно'),
+          ButtonWithText("Подробнее", WHITE, MAINCOLOR)
         ],
       ),
     );
   }
 }
 
-class Delivery extends StatelessWidget {
+class DotsInList extends StatelessWidget {
+  final String text;
+
+  DotsInList({this.text});
+
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.only(left: 8, right: 8, bottom: 50),
-      child: Column(
-        children: [
-          Text("Доставим SIM-карту бесплатно домой",
-              style: TextStyle(color: Colors.white, fontSize: 36)),
-          Container(
-            margin: EdgeInsets.only(top: 24, bottom: 16),
-            child: Text(
-                "Оформите заказ онлайн на сайте Tele2 и активируйте SIM-карту самостоятельно:",
-                textAlign: TextAlign.left,
-                style: TextStyle(color: Colors.white, fontSize: 18)),
-          ),
-          ListTile(
-              leading: Icon(
-                Icons.brightness_1,
-                color: Colors.white,
-              ),
-              title: new Text(
-                'быстро',
-                style: TextStyle(color: Colors.white, fontSize: 18),
-              )),
-          ListTile(
-              leading: Icon(
-                Icons.brightness_1,
-                color: Colors.white,
-              ),
-              title: new Text(
-                'удобно',
-                style: TextStyle(color: Colors.white, fontSize: 18),
-              )),
-          ListTile(
-              leading: Icon(
-                Icons.brightness_1,
-                color: Colors.white,
-              ),
-              title: new Text(
-                'качественно',
-                style: TextStyle(color: Colors.white, fontSize: 18),
-              )),
-          ButtonWithText("Подробнее", 0xFFFFFFFF, 0xFF131313)
-        ],
-      ),
-    );
+    return ListTile(
+        leading: Icon(
+          Icons.brightness_1,
+          color: Colors.white,
+        ),
+        title: new Text(
+          text,
+          style: textStyle18,
+        ));
   }
 }

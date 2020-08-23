@@ -17,8 +17,8 @@ class MyApp extends StatelessWidget {
       routes: {
         '/': (context) => Login(),
         '/Constructor': (context) => Constructor(),
-        '/Constructor/ConnectTarif': (context) => ConnectTarif(),
-        '/': (context) => Bin(),///Constructor/ConnectTarif/Bin
+        '/Constructor/ConnectTarif': (context) => ConnectTariff(),
+        '/Constructor/ConnectTarif/Bin': (context) => Bin(),
         '/Constructor/OwnTarif': (context) => OwnTarif(),
         '/Constructor/OwnTarif/Helper': (context) => Helper(),
       },

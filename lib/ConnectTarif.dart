@@ -1,54 +1,31 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app/Components/AppBarWithBody.dart';
 import 'package:flutter_app/Components/ButtonWithText.dart';
 import 'package:flutter_app/Components/FieldWithHelp.dart';
-import 'package:flutter_svg/svg.dart';
 import 'ConstVariables.dart';
 
-class ConnectTarif extends StatelessWidget {
+class ConnectTariff extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        backgroundColor: Color(0xFF000000),
-        appBar: AppBar(
-          backgroundColor: mainColor,
-          elevation: 0,
-          title: Text("Подключиться к Tele2"),
-          centerTitle: true,
-          actions: [
-            GestureDetector(
-              onTap: () =>
-                  Navigator.pushNamed(context, "/Constructor/OwnTarif/Helper"),
-              child: Container(
-                  margin: EdgeInsets.only(right: 10),
-                  child: SvgPicture.asset("assets/help.svg")),
-            )
-          ],
-          leading: IconButton(
-            icon: const Icon(
-              Icons.arrow_back,
-              color: Colors.white,
-            ),
-            onPressed: () {
-              Navigator.pop(context);
-            },
-          ),
-        ),
-        body: SafeArea(
-            child: Column(children: [
+    return AppBarWithBody(
+        title: "Подключиться к Tele2",
+        path: "assets/help.svg",
+        isScroll: false,
+        content: Column(children: [
           Expanded(
             child: Column(
               children: [
-                Tarif(),
+                Tariff(),
                 DoWithNumber(),
               ],
             ),
           ),
           Footer()
-        ])));
+        ]));
   }
 }
 
-class Tarif extends StatelessWidget {
+class Tariff extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -106,7 +83,7 @@ class DoWithNumberState extends State<DoWithNumber> {
       child: Column(
         children: [
           ListTile(
-            title: Text('Получить новый номер',style: TarifStyle),
+            title: Text('Получить новый номер', style: TarifStyle),
             leading: Theme(
               data: Theme.of(context).copyWith(
                 unselectedWidgetColor: Color(0xFFE8E8ED),
@@ -124,9 +101,12 @@ class DoWithNumberState extends State<DoWithNumber> {
             ),
           ),
           ListTile(
-            title: Text('Перенести свой номер',style: TarifStyle,),
+            title: Text(
+              'Перенести свой номер',
+              style: TarifStyle,
+            ),
             leading: Theme(
-              data:Theme.of(context).copyWith(
+              data: Theme.of(context).copyWith(
                 unselectedWidgetColor: Color(0xFFE8E8ED),
               ),
               child: Radio(
@@ -158,7 +138,8 @@ class Footer extends StatelessWidget {
               color: Colors.white,
               decoration: TextDecoration.underline,
             )),
-        ButtonWithText("Продолжить", 0xFF000000, 0xFFFFFFFF,path: "/Constructor/ConnectTarif")
+        ButtonWithText("Продолжить", 0xFF000000, 0xFFFFFFFF,
+            path: "/Constructor/ConnectTarif/Bin")
       ],
     );
   }

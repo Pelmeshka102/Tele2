@@ -1,30 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
-
+import 'package:flutter_app/Components/AppBarWithBody.dart';
 import 'Components/ButtonTextCancel.dart';
 import 'ConstVariables.dart';
 
 class Helper extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        backgroundColor: Color(0xFF000000),
-        appBar: AppBar(
-          backgroundColor: mainColor,
-          elevation: 0,
-          title: Text("Помощь и поддержка"),
-          centerTitle: true,
-          leading: IconButton(
-            icon: const Icon(
-              Icons.arrow_back,
-              color: Colors.white,
-            ),
-            onPressed: () {
-              Navigator.pop(context);
-            },
-          ),
-        ),
-        body: SafeArea(child: Column(children: [Help()])));
+    return AppBarWithBody(title: "Помощь и поддержка", content: Help());
   }
 }
 
